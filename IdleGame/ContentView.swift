@@ -8,9 +8,14 @@
 import SwiftUI
 import Foundation
 struct ContentView: View {
-    @State var numGold = 0
-    @State var numWood = 0
-    @State var numLogger = 0
+    @State var numGold: Double = 0
+    @State var numWood: Int = 0
+    @State var numLogger: Int = 0
+    @State var costOfLogger: Double = 10
+    @State var loggerTax: Double = 1.5
+    @State var axeLevel: Int = 1
+    @State var axeUpgradeCost: Double = 10
+    @State var axeUpgradeTax: Double = 1.4
     
     let timer = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
     
@@ -21,7 +26,7 @@ struct ContentView: View {
             numWood += numLogger
         }
         
-        WoodAge(numWood: $numWood, numGold: $numGold, numLogger: $numLogger)
+        WoodAge(numGold: $numGold, numWood: $numWood, numLogger: $numLogger, costOfLogger: $costOfLogger, loggerTax: $loggerTax, axeLevel: $axeLevel, axeUpgradeCost: $axeUpgradeCost, axeUpgradeTax: $axeUpgradeTax)
     }
 }
 
