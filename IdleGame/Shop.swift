@@ -11,12 +11,16 @@ struct Shop: View {
     @State var navigationBarBackButtonHidden = true
     @Binding var numGold: Double
     @Binding var numWood: Int
+    @Binding var numStone: Int
     @Binding var numLogger: Int
     @Binding var numMerchant: Int
+    @Binding var numMiner: Int
     @Binding var costOfLogger: Double
     @Binding var loggerTax: Double
     @Binding var costOfMerchant: Double
     @Binding var merchantTax: Double
+    @Binding var costOfMiner: Double
+    @Binding var minerTax: Double
     @Binding var axeLevel: Int
     @Binding var axeUpgradeCost: Double
     @Binding var axeUpgradeTax: Double
@@ -161,6 +165,7 @@ struct Shop: View {
                     }){
                         Text("25x")
                     }
+                    
                     Spacer()
                     Button(action:  {
                         let findAmount: Int = maxAmount(objectCost: costOfMerchant, objectTax: merchantTax)
@@ -168,6 +173,49 @@ struct Shop: View {
                         if findAmount >= 1 {
                             if canAfford(objectCost: costOfMerchant, objectTax: merchantTax, amount: findAmount) {
                                 buy(costOfObject: &costOfMerchant, costOfTax: &merchantTax, numObject: &numMerchant, amount: findAmount)
+                            }
+                        }
+                            
+                    }){
+                        Text("All")
+                    }
+                    Spacer()
+                }
+                HStack{
+                    Text("Buy Miners: Cost: \(Int(round(costOfMiner)))")
+                        .padding(.leading)
+                    Spacer()
+                    Button(action: {
+                        if canAfford(objectCost: costOfMiner, objectTax: minerTax, amount: 1) {
+                            buy(costOfObject: &costOfMiner, costOfTax: &minerTax, numObject: &numMiner, amount: 1)
+                        }
+                    }){
+                        Text("1x")
+                    }
+                    Spacer()
+                    Button(action: {
+                        if canAfford(objectCost: costOfMiner, objectTax: minerTax, amount: 5) {
+                            buy(costOfObject: &costOfMiner, costOfTax: &minerTax, numObject: &numMiner, amount: 5)
+                        }
+                    }){
+                        Text("5x")
+                    }
+                    Spacer()
+                    Button(action: {
+                        if canAfford(objectCost: costOfMiner, objectTax: minerTax, amount: 25) {
+                            buy(costOfObject: &costOfMiner, costOfTax: &minerTax, numObject: &numMiner, amount: 25)
+                        }
+                    }){
+                        Text("25x")
+                    }
+                    
+                    Spacer()
+                    Button(action:  {
+                        let findAmount: Int = maxAmount(objectCost: costOfMiner, objectTax: minerTax)
+                        
+                        if findAmount >= 1 {
+                            if canAfford(objectCost: costOfMiner, objectTax: minerTax, amount: findAmount) {
+                                buy(costOfObject: &costOfMiner, costOfTax: &minerTax, numObject: &numMiner, amount: findAmount)
                             }
                         }
                             
@@ -250,12 +298,16 @@ struct Shop_Previews: PreviewProvider {
         Shop(navigationBarBackButtonHidden: true,
             numGold: .constant(5),
             numWood: .constant(5),
+            numStone: .constant(5),
             numLogger: .constant(5),
             numMerchant: .constant(5),
+            numMiner: .constant(5),
             costOfLogger: .constant(5),
             loggerTax: .constant(5),
             costOfMerchant: .constant(5),
             merchantTax: .constant(5),
+            costOfMiner: .constant(5),
+            minerTax: .constant(5),
             axeLevel: .constant(5),
             axeUpgradeCost: .constant(5),
             axeUpgradeTax: .constant(5)
