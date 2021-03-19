@@ -12,8 +12,11 @@ struct Shop: View {
     @Binding var numGold: Double
     @Binding var numWood: Int
     @Binding var numLogger: Int
+    @Binding var numMerchant: Int
     @Binding var costOfLogger: Double
     @Binding var loggerTax: Double
+    @Binding var costOfMerchant: Double
+    @Binding var merchantTax: Double
     @Binding var axeLevel: Int
     @Binding var axeUpgradeCost: Double
     @Binding var axeUpgradeTax: Double
@@ -33,20 +36,20 @@ struct Shop: View {
             }
         }
     
-    func buy(object: String, amount: Int) {
-        // Calculate and deliver buying upgrades/workers with
-        // incremental pricing
-        
-        if object == "Logger" {
-            for _ in 1...amount {
-                if numGold >= costOfLogger {
-                    numGold -= costOfLogger
-                    numLogger += 1
-                    costOfLogger *= loggerTax
-                    costOfLogger = round(costOfLogger)
-                }
+    func buy(costOfObject: inout Double, costOfTax: inout Double, numObject: inout Int, amount: Int) {
+        for _ in 1...amount {
+            if numGold >= costOfObject {
+                numGold -= costOfObject
+                numObject += 1
+                print(costOfObject)
+                print(costOfTax)
+                costOfObject *= costOfTax
+                print(costOfObject)
+                costOfObject = round(costOfObject)
+                
             }
         }
+        print("Bought \(amount) of something.")
     }
     
     func canAfford(objectCost: Double, objectTax: Double, amount: Int) -> Bool {
@@ -57,7 +60,6 @@ struct Shop: View {
             finalPrice += tempCost
             tempCost *= objectTax
             tempCost = round(tempCost)
-            print(finalPrice)
         }
         if numGold >= finalPrice {
             return true
@@ -86,12 +88,16 @@ struct Shop: View {
         ZStack {
             VStack {
                 HStack {
+                    Text("Gold:  \(Int(round(numGold)))")
+                }
+                Spacer()
+                HStack {
                     Text("Buy Loggers: Cost: \(Int(round(costOfLogger)))")
                         .padding(.leading)
                     Spacer()
                     Button(action: {
                         if canAfford(objectCost: costOfLogger, objectTax: loggerTax, amount: 1) {
-                            buy(object: "Logger", amount: 1)
+                            buy(costOfObject: &costOfLogger, costOfTax: &loggerTax, numObject: &numLogger, amount: 1)
                         }
                     }){
                         Text("1x")
@@ -99,7 +105,7 @@ struct Shop: View {
                     Spacer()
                     Button(action: {
                         if canAfford(objectCost: costOfLogger, objectTax: loggerTax, amount: 5) {
-                            buy(object: "Logger", amount: 5)
+                            buy(costOfObject: &costOfLogger, costOfTax: &loggerTax, numObject: &numLogger, amount: 5)
                         }
                     }){
                         Text("5x")
@@ -107,7 +113,7 @@ struct Shop: View {
                     Spacer()
                     Button(action: {
                         if canAfford(objectCost: costOfLogger, objectTax: loggerTax, amount: 25) {
-                            buy(object: "Logger", amount: 25)
+                            buy(costOfObject: &costOfLogger, costOfTax: &loggerTax, numObject: &numLogger, amount: 25)
                         }
                     }){
                         Text("25x")
@@ -116,11 +122,9 @@ struct Shop: View {
                     Button(action:  {
                         let findAmount: Int = maxAmount(objectCost: costOfLogger, objectTax: loggerTax)
                         
-                        print("Find AMOUNT: \(findAmount)")
                         if findAmount >= 1 {
                             if canAfford(objectCost: costOfLogger, objectTax: loggerTax, amount: findAmount) {
-                                print("Find amount: \(findAmount)")
-                                buy(object: "Logger", amount: findAmount)
+                                buy(costOfObject: &costOfLogger, costOfTax: &loggerTax, numObject: &numLogger, amount: findAmount)
                             }
                         }
                             
@@ -129,6 +133,60 @@ struct Shop: View {
                     }
                     Spacer()
                     
+                }
+                HStack{
+                    Text("Buy Merchants: Cost: \(Int(round(costOfMerchant)))")
+                        .padding(.leading)
+                    Spacer()
+                    Button(action: {
+                        if canAfford(objectCost: costOfMerchant, objectTax: merchantTax, amount: 1) {
+                            buy(costOfObject: &costOfMerchant, costOfTax: &merchantTax, numObject: &numMerchant, amount: 1)
+                        }
+                    }){
+                        Text("1x")
+                    }
+                    Spacer()
+                    Button(action: {
+                        if canAfford(objectCost: costOfMerchant, objectTax: merchantTax, amount: 5) {
+                            buy(costOfObject: &costOfMerchant, costOfTax: &merchantTax, numObject: &numMerchant, amount: 5)
+                        }
+                    }){
+                        Text("5x")
+                    }
+                    Spacer()
+                    Button(action: {
+                        if canAfford(objectCost: costOfMerchant, objectTax: merchantTax, amount: 25) {
+                            buy(costOfObject: &costOfMerchant, costOfTax: &merchantTax, numObject: &numMerchant, amount: 25)
+                        }
+                    }){
+                        Text("25x")
+                    }
+                    Spacer()
+                    Button(action:  {
+                        let findAmount: Int = maxAmount(objectCost: costOfMerchant, objectTax: merchantTax)
+                        
+                        if findAmount >= 1 {
+                            if canAfford(objectCost: costOfMerchant, objectTax: merchantTax, amount: findAmount) {
+                                buy(costOfObject: &costOfMerchant, costOfTax: &merchantTax, numObject: &numMerchant, amount: findAmount)
+                            }
+                        }
+                            
+                    }){
+                        Text("All")
+                    }
+                    Spacer()
+                }
+                Spacer()
+                HStack {
+                    Button(action: {
+                        if canAfford(objectCost: axeUpgradeCost, objectTax: axeUpgradeTax, amount: 1) {
+                            print(axeUpgradeTax)
+                            buy(costOfObject: &axeUpgradeCost, costOfTax: &axeUpgradeTax, numObject: &axeLevel, amount: 1)
+                        }
+                    }){
+                        Text("Upgrade Axe")
+                    }
+                    Text("Cost: \(Int(round(axeUpgradeCost)))")
                 }
                 HStack {
                     
@@ -171,9 +229,11 @@ struct Shop: View {
                         Text("All")
                     }
                     Spacer()
+                    
                 }
                 .padding(.top)
                 Spacer()
+                
             }
         }
         .navigationBarTitle("")
@@ -187,6 +247,18 @@ struct Shop: View {
 
 struct Shop_Previews: PreviewProvider {
     static var previews: some View {
-        Shop(numGold: .constant(5), numWood: .constant(5), numLogger: .constant(5), costOfLogger: .constant(5), loggerTax: .constant(5), axeLevel: .constant(5), axeUpgradeCost: .constant(5), axeUpgradeTax: .constant(5))
+        Shop(navigationBarBackButtonHidden: true,
+            numGold: .constant(5),
+            numWood: .constant(5),
+            numLogger: .constant(5),
+            numMerchant: .constant(5),
+            costOfLogger: .constant(5),
+            loggerTax: .constant(5),
+            costOfMerchant: .constant(5),
+            merchantTax: .constant(5),
+            axeLevel: .constant(5),
+            axeUpgradeCost: .constant(5),
+            axeUpgradeTax: .constant(5)
+        )
     }
 }
