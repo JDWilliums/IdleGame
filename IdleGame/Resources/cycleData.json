@@ -1,0 +1,29 @@
+[
+    {
+        "name": "Merchant",
+        "cost": 10.0,
+        "tax": 3.0,
+        "id": 1001,
+        "imageName": "cart",
+        "amount": 1,
+        "isUnlocked": true
+    },
+    {
+        "name": "Logger",
+        "cost": 10.0,
+        "tax": 1.5,
+        "id": 1002,
+        "imageName": "figure.stand",
+        "amount": 0,
+        "isUnlocked": false
+    },
+    {
+        "name": "Miner",
+        "cost": 1000.0,
+        "tax": 1.6,
+        "id": 1003,
+        "imageName": "face.smiling",
+        "amount": 0,
+        "isUnlocked": false
+    }
+]

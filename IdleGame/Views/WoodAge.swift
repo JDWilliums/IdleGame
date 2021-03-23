@@ -30,39 +30,8 @@ struct WoodAge: View {
         NavigationView {
             ZStack{
                 VStack{
-                    
-                    HStack {
-                        NavigationLink(destination:
-                            Shop(navigationBarBackButtonHidden: true,
-                                numGold: self.$numGold,
-                                numWood: self.$numWood,
-                                numStone: self.$numStone,
-                                numLogger: self.$numLogger,
-                                numMerchant: self.$numMerchant,
-                                numMiner: self.$numMiner,
-                                costOfLogger: self.$costOfLogger,
-                                loggerTax: self.$loggerTax,
-                                costOfMerchant: self.$costOfMerchant,
-                                merchantTax: self.$merchantTax,
-                                costOfMiner: self.$costOfMiner,
-                                minerTax: self.$minerTax,
-                                axeLevel: self.$axeLevel,
-                                axeUpgradeCost: self.$axeUpgradeCost,
-                                axeUpgradeTax: self.$axeUpgradeTax
-                        ))
-                        {
-                                Text("Shop")
-                            
-                        }.padding(.all, 10)
-                        .foregroundColor(.white)
-                        .background(Color.black)
-                        .cornerRadius(20)
-                        .ignoresSafeArea(edges: .all)
-                    }.padding()
-                    
-                    
                     Spacer()
-                    HStack{
+                    /*HStack{
                         Spacer()
                         VStack(alignment: .leading){
                             Text("Gold")
@@ -83,6 +52,10 @@ struct WoodAge: View {
                         }
                         Spacer()
                     }
+ */
+                    CycleList(
+                        numGold: $numGold)
+                    
                     Spacer()
                     Button(action: {
                         numWood += 1 * axeLevel
@@ -93,6 +66,7 @@ struct WoodAge: View {
                         
                     }
                     Spacer()
+                    
                     
                 }
             }

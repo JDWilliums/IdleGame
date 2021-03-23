@@ -25,9 +25,9 @@ struct Shop: View {
     @Binding var axeUpgradeCost: Double
     @Binding var axeUpgradeTax: Double
     
-    @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
+   // @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
     
-    var backButton : some View { Button(action: {
+   /* var backButton : some View { Button(action: {
             self.presentationMode.wrappedValue.dismiss()
             }) {
                 HStack {
@@ -39,6 +39,7 @@ struct Shop: View {
                 }
             }
         }
+ */
     
     func buy(costOfObject: inout Double, costOfTax: inout Double, numObject: inout Int, amount: Int) {
         for _ in 1...amount {
@@ -282,11 +283,12 @@ struct Shop: View {
                 .padding(.top)
                 Spacer()
                 
+                
             }
         }
         .navigationBarTitle("")
         .navigationBarBackButtonHidden(true)
-        .navigationBarItems(trailing: backButton)
+        //.navigationBarItems(trailing: backButton)
     }
     
 }
