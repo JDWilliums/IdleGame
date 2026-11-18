@@ -1,0 +1,14 @@
+node_modules/
+dist/
+coverage/
+.progress/
+*.log
+.DS_Store
+.env
+.env.*
+!.env.example
+.vscode/*
+!.vscode/extensions.json
+!.vscode/settings.json
+playground/*
+!playground/README.md
