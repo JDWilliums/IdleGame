@@ -88,7 +88,7 @@ Hosted databases require encrypted connections. Their connection strings usually
 | `numeric` (`avg`, money) | **`string`** | exact decimals; convert deliberately |
 | `timestamptz` | `Date` | — |
 | `timestamp` (no tz) | `Date`, read as **local time** | a classic source of off-by-hours bugs |
-| `json` / `jsonb` | parsed object | — |
+| `json` / `jsonb` | parsed object | when **sending** one, pass `JSON.stringify(value)`: `pg` turns a top-level JS array into a Postgres array, not JSON |
 
 **PGlite is more relaxed**: it returns a `bigint` as a `number` when it fits safely. Code that passes its tests on PGlite can then get `'3'` instead of `3` on a real server. To make queries behave the same on both, **cast in SQL**: `count(*)::integer`, `round(avg(xp))::integer`. Use `integer` columns for game values unless they could really pass 2.1 billion (total XP across all players could; one player's skill XP can't).
 
