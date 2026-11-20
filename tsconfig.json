@@ -8,6 +8,8 @@
     "moduleResolution": "bundler",
     "jsx": "react-jsx",
     "types": ["node"],
+    // Lets a solution file import a provided file that only exists next to the exercise.
+    "rootDirs": ["exercises", "solutions"],
 
     "strict": true,
     "noUncheckedIndexedAccess": true,

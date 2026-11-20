@@ -101,7 +101,7 @@ Scripts in `package.json` can call any CLI in `node_modules/.bin` directly:
 
 ## `npm audit`: reading security warnings
 
-When you ran `npm install` in this repo, you probably saw something like:
+Sooner or later, `npm install` will end with something like this (this repo printed exactly this for a while, before the fix was released):
 
 ```
 6 high severity vulnerabilities
