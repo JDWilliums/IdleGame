@@ -127,7 +127,7 @@ For your game, the frontend and API are deployed together, so additive changes p
 | `GET /api/me` | the current user | 17 |
 | `GET /api/save` | fetch my cloud save + revision | 18 |
 | `PUT /api/save` | upload my save (with `baseRevision`) | 18 |
-| `GET /api/leaderboard?skill=` | top players for a skill | 16, C10 |
+| `GET /api/leaderboard?skill=` | top players for a skill | 16, C09 |
 | `GET /health` | liveness check for the host | 20 |
 
 ## Check your understanding
